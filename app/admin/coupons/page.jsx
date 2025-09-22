@@ -38,14 +38,26 @@ export default function AdminCoupons() {
     try {
       const token = await getToken();
 
-      newCoupon.discount = Number(newCoupon.discount)
-      newCoupon.expiresAt = new Date(newCoupon.expiresAt)
+      const payload = {
+        ...newCoupon,
+        discount: Number(newCoupon.discount),
+        expiresAt: new Date(newCoupon.expiresAt),
+      };
 
-      const { data } = await axios.post('/api/admin/coupon', {coupon: newCoupon}, {
+      const { data } = await axios.post('/api/admin/coupon', { coupon: payload }, {
         headers: { Authorization: `Bearer ${token}` }
       });
+
       toast.success(data.message || "Coupon added");
-      
+      setNewCoupon({
+        code: '',
+        description: '',
+        discount: '',
+        forNewUser: false,
+        forMember: false,
+        isPublic: false,
+        expiresAt: new Date()
+      });
       await fetchCoupons();
     } catch (error) {
       toast.error(error?.response?.data?.error || error.message);
@@ -58,15 +70,17 @@ export default function AdminCoupons() {
 
   const deleteCoupon = async (code) => {
     try {
-        const confirm = window.confirm("Are you sure you want to delete this coupon?") 
-        if(!confirm) return;   
+      const confirm = window.confirm("Are you sure you want to delete this coupon?");
+      if (!confirm) return;
+
       const token = await getToken();
-      await axios.delete('/api/admin/coupon', {
-        headers: { Authorization: `Bearer ${token}` }
+      const { data } = await axios.delete('/api/admin/coupon', {
+        headers: { Authorization: `Bearer ${token}` },
+        data: { code }
       });
-      await fetchCoupons();
+
       toast.success(data.message || "Coupon deleted");
-     
+      await fetchCoupons();
     } catch (error) {
       toast.error(error?.response?.data?.error || error.message);
     }
@@ -144,26 +158,34 @@ export default function AdminCoupons() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200">
-              {coupons.map((coupon) => (
-                <tr key={coupon.code} className="hover:bg-slate-50">
-                  <td className="py-3 px-4 font-medium text-slate-800">{coupon.code}</td>
-                  <td className="py-3 px-4 text-slate-800">{coupon.description}</td>
-                  <td className="py-3 px-4 text-slate-800">{coupon.discount}%</td>
-                  <td className="py-3 px-4 text-slate-800">{format(new Date(coupon.expiresAt), 'yyyy-MM-dd')}</td>
-                  <td className="py-3 px-4 text-slate-800">{coupon.forNewUser ? 'Yes' : 'No'}</td>
-                  <td className="py-3 px-4 text-slate-800">{coupon.forMember ? 'Yes' : 'No'}</td>
-                  <td className="py-3 px-4 text-slate-800">
-                    <DeleteIcon
-                      onClick={() =>
-                        toast.promise(deleteCoupon(coupon.code), {
-                          loading: "Deleting coupon...",
-                        })
-                      }
-                      className="w-5 h-5 text-red-500 hover:text-red-800 cursor-pointer"
-                    />
+              {coupons.length > 0 ? (
+                coupons.map((coupon) => (
+                  <tr key={coupon.code} className="hover:bg-slate-50">
+                    <td className="py-3 px-4 font-medium text-slate-800">{coupon.code}</td>
+                    <td className="py-3 px-4 text-slate-800">{coupon.description}</td>
+                    <td className="py-3 px-4 text-slate-800">{coupon.discount}%</td>
+                    <td className="py-3 px-4 text-slate-800">{format(new Date(coupon.expiresAt), 'yyyy-MM-dd')}</td>
+                    <td className="py-3 px-4 text-slate-800">{coupon.forNewUser ? 'Yes' : 'No'}</td>
+                    <td className="py-3 px-4 text-slate-800">{coupon.forMember ? 'Yes' : 'No'}</td>
+                    <td className="py-3 px-4 text-slate-800">
+                      <DeleteIcon
+                        onClick={() =>
+                          toast.promise(deleteCoupon(coupon.code), {
+                            loading: "Deleting coupon...",
+                          })
+                        }
+                                                className="w-5 h-5 text-red-500 hover:text-red-800 cursor-pointer"
+                      />
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="7" className="py-6 px-4 text-center text-slate-400">
+                    No coupons available.
                   </td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>
