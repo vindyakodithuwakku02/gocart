@@ -1,22 +1,29 @@
-import authAdmin from "@/middlewares/authAdmin";
-import { getAuth } from "@clerk/nextjs/server";
+import { currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
+export async function GET() {
+  try {
+    const user = await currentUser();
 
-// Auth Admin
-export async function GET(request) {
-    try {
-        const { userId } = getAuth(request)
-        const isAdmin = await authAdmin(userId)
+    if (!user) {
+      return NextResponse.json({ error: "User not authenticated" }, { status: 401 });
+    }
 
-        if(!isAdmin){
-            return NextResponse.json({ error: 'not authorized'} , {status : 401})
-        }
+    const email = user.emailAddresses?.[0]?.emailAddress?.toLowerCase();
+    const adminList = process.env.ADMIN_EMAIL?.split(",").map(e => e.trim().toLowerCase()) || [];
 
-        return NextResponse.json({isAdmin})
-    } catch (error) {
-        console.error(error)
-        return NextResponse.json({ error: error.code} , {status:400})
+    console.log("🔍 Logged-in email:", email);
+    console.log("🔐 Admin list:", adminList);
 
-    }    
+    const isAdmin = adminList.includes(email);
+
+    if (!isAdmin) {
+      return NextResponse.json({ error: "Not authorized" }, { status: 401 });
+    }
+
+    return NextResponse.json({ isAdmin });
+  } catch (error) {
+    console.error("Admin check error:", error);
+    return NextResponse.json({ error: error.code || error.message }, { status: 400 });
+  }
 }
