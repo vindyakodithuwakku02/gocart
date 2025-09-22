@@ -1,18 +1,25 @@
-import { clerkClient } from "@clerk/nextjs/server"
+import { currentUser } from "@clerk/nextjs/server";
 
+const authAdmin = async () => {
+  try {
+    const user = await currentUser();
 
-const authAdmin = async (userId) => {
-    try {
-        if(!userId) return false
-
-        const client = await clerkClient()
-        const user = await client.users.getUser(userId)
-
-        return process.env.ADMIN_EMAIL.split(',').includes(user.emailAddresses[0].emailAddress)
-    } catch (error) {
-        console.error(error)
-        return false
+    if (!user) {
+      console.log("❌ No user found");
+      return false;
     }
-}
 
-export default authAdmin
+    const email = user.emailAddresses?.[0]?.emailAddress?.toLowerCase();
+    const adminList = process.env.ADMIN_EMAIL?.split(",").map(e => e.trim().toLowerCase()) || [];
+
+    console.log("🔍 Logged-in email:", email);
+    console.log("🔐 Admin list:", adminList);
+
+    return adminList.includes(email);
+  } catch (error) {
+    console.error("authAdmin error:", error);
+    return false;
+  }
+};
+
+export default authAdmin;
