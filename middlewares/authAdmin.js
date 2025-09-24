@@ -1,15 +1,15 @@
-import { currentUser } from "@clerk/nextjs/server";
+import { getAuth } from "@clerk/nextjs/server";
 
-const authAdmin = async () => {
+const authAdmin = async (request) => {
   try {
-    const user = await currentUser();
+    const { userId, sessionClaims } = getAuth(request);
 
-    if (!user) {
-      console.log("❌ No user found");
+    if (!userId || !sessionClaims?.email) {
+      console.log("❌ No user or email found");
       return false;
     }
 
-    const email = user.emailAddresses?.[0]?.emailAddress?.toLowerCase();
+    const email = sessionClaims.email.toLowerCase();
     const adminList = process.env.ADMIN_EMAIL?.split(",").map(e => e.trim().toLowerCase()) || [];
 
     console.log("🔍 Logged-in email:", email);
