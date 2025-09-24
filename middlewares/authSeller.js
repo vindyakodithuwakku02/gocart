@@ -2,7 +2,7 @@ import prisma from '@/lib/prisma'
 
 const authSeller = async(userId) => {
     try{
-        const user = await prisma.user.findUniquye({
+        const user = await prisma.user.findUnique({
             where: {id: userId},
             include: {store: true},
         })
