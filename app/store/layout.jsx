@@ -6,20 +6,20 @@ export const metadata = {
     description: "GoCart. - Store Dashboard",
 };
 
-// export default function RootAdminLayout({ children }) {
+export default function RootAdminLayout({ children }) {
 
-//     return (
-//         <>
-//         <SignedIn>
-//             <StoreLayout>
-//                 {children}
-//             </StoreLayout>
-//         </SignedIn>
+    return (
+        <>
+        <SignedIn>
+            <StoreLayout>
+                {children}
+            </StoreLayout>
+        </SignedIn>
 
-//         <SignedOut>
-//             <div className="min-h-screen flex items-center justify-center">
-//                 <SignIn fallbackRedirectUrl="/store" routing="hash" />
-//                 </div></SignedOut>    
-//         </>
-//     );
-// }
+        <SignedOut>
+            <div className="min-h-screen flex items-center justify-center">
+                <SignIn fallbackRedirectUrl="/store" routing="hash" />
+                </div></SignedOut>    
+        </>
+    );
+}
