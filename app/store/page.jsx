@@ -2,6 +2,7 @@
 import { dummyStoreDashboardData } from "@/assets/assets"
 import Loading from "@/components/Loading"
 import { useAuth } from "@clerk/nextjs"
+import axios from "axios"
 import { CircleDollarSignIcon, ShoppingBasketIcon, StarIcon, TagsIcon } from "lucide-react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
@@ -33,10 +34,12 @@ export default function Dashboard() {
     const fetchDashboardData = async () => {
         try {
             const token = await getToken()
-            
+            const { data } = await axios.get('/api/store/dashboard' , {headers: {Authorization : `Bearer ${token}`}})    
+            setDashboardData(data.dashboardData)        
         } catch (error) {
-            
+            toast.error(error?.response?.data?.error || error.message)
         }
+        setLoading(false)
     }
 
     useEffect(() => {
