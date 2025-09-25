@@ -31,16 +31,16 @@ export default function Dashboard() {
         { title: 'Total Ratings', value: dashboardData.ratings.length, icon: StarIcon },
     ]
 
-    const fetchDashboardData = async () => {
-        try {
-            const token = await getToken()
-            const { data } = await axios.get('/api/store/dashboard' , {headers: {Authorization : `Bearer ${token}`}})    
-            setDashboardData(data.dashboardData)        
-        } catch (error) {
-            toast.error(error?.response?.data?.error || error.message)
-        }
-        setLoading(false)
-    }
+    // const fetchDashboardData = async () => {
+    //     try {
+    //         const token = await getToken()
+    //         const { data } = await axios.get('/api/store/dashboard' , {headers: {Authorization : `Bearer ${token}`}})    
+    //         setDashboardData(data.dashboardData)        
+    //     } catch (error) {
+    //         toast.error(error?.response?.data?.error || error.message)
+    //     }
+    //     setLoading(false)
+    // }
 
     useEffect(() => {
         fetchDashboardData()
