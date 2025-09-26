@@ -9,7 +9,7 @@ import axios from "axios"
 
 export default function StoreManageProducts() {
 
-    const getToken = useAuth()
+    const {getToken} = useAuth()
     const {user} = useUser()
     const currency = process.env.NEXT_PUBLIC_CURRENCY_SYMBOL || '$'
 
