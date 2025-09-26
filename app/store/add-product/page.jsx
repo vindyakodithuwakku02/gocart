@@ -62,8 +62,6 @@ export default function StoreAddProduct() {
       });
 
       toast.success(data.message || "Product added successfully!");
-
-      // Reset form
       setProductInfo({
         name: "",
         description: "",
@@ -80,7 +78,7 @@ export default function StoreAddProduct() {
   };
 
   return (
-    <div className="flex justify-center w-full px-6 py-10">
+    <div className="flex justify-center w-full px-4">
       <form
         onSubmit={(e) =>
           toast.promise(onSubmitHandler(e), { loading: "Adding Product..." })
@@ -88,17 +86,17 @@ export default function StoreAddProduct() {
         className="w-full max-w-3xl bg-white p-8 rounded-2xl shadow-md border border-slate-200"
       >
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-5">
           <h1 className="text-3xl font-semibold text-slate-800">
             Add New <span className="text-slate-600 font-medium">Products</span>
           </h1>
-          <p className="text-slate-500 mt-2 text-sm">
+          <p className="text-slate-500 mt-1 text-sm">
             Fill in the details below to add a new product to your store.
           </p>
         </div>
 
         {/* Image Upload Section */}
-        <div className="mb-8">
+        <div className="mb-6">
           <p className="text-slate-700 font-medium mb-3">Product Images</p>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {Object.keys(images).map((key) => (
@@ -133,7 +131,7 @@ export default function StoreAddProduct() {
         </div>
 
         {/* Name */}
-        <div className="mb-6">
+        <div className="mb-5">
           <label className="block text-slate-700 mb-2 font-medium">
             Product Name
           </label>
@@ -149,7 +147,7 @@ export default function StoreAddProduct() {
         </div>
 
         {/* Description */}
-        <div className="mb-6">
+        <div className="mb-5">
           <label className="block text-slate-700 mb-2 font-medium">
             Description
           </label>
@@ -165,7 +163,7 @@ export default function StoreAddProduct() {
         </div>
 
         {/* Price Inputs */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-5">
           <div>
             <label className="block text-slate-700 mb-2 font-medium">
               Actual Price ($)
@@ -197,7 +195,7 @@ export default function StoreAddProduct() {
         </div>
 
         {/* Category */}
-        <div className="mb-8">
+        <div className="mb-6">
           <label className="block text-slate-700 mb-2 font-medium">
             Category
           </label>
