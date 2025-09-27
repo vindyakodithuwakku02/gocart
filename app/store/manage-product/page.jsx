@@ -37,26 +37,28 @@ export default function StoreManageProducts() {
   };
 
   // ✅ Toggle Stock (you can extend this to actually call your API)
-  const toggleStock = async (productId) => {
-    try {
-        const token = await getToken();
-        const { data } = await axios.patch(
-          `/api/store/product/${productId}/toggle-stock`,
-          {},
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        )
-        setProducts((prevProducts) =>
-          prevProducts.map((product) =>
-            product.id === productId ? { ...product, inStock: data.inStock } : product
-          )
-        );
-        toast.success(data.message);
-    } catch (error) {
-        toast.error(error?.response?.data?.error || error.message);
-    }
-  };
+
+const toggleStock = async (productId) => {
+  try {
+    const token = await getToken();
+    const { data } = await axios.patch(
+      "/api/store/stock-toggle",
+      { productId },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+
+    setProducts((prevProducts) =>
+      prevProducts.map((product) =>
+        product.id === productId ? { ...product, inStock: data.inStock } : product
+      )
+    );
+
+    toast.success(data.message);
+  } catch (error) {
+    toast.error(error?.response?.data?.error || error.message);
+  }
+};
+
 
   useEffect(() => {
     if (user) fetchProducts();
