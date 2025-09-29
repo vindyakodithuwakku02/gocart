@@ -20,7 +20,7 @@ export async function POST(request) {
         }
     }
 
-    Get user cart
+    // Get user cart
 export async function GET(request) {
     try {
         const { userId } = getAuth(request)
