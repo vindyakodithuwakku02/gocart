@@ -49,7 +49,7 @@ export default function StoreOrders() {
             }
 
 
-    // }
+    }
 
     const openModal = (order) => {
         setSelectedOrder(order)
