@@ -20,18 +20,3 @@ export async function POST(request) {
     }
 }
 
-// Get all addresses for a user
-export async function GET(request) {
-    try {
-        const { userId } = getAuth(request)
-        const addresses = await prisma.address.findMany({
-            where: { userId: userId }
-        })
-        return NextResponse.json({ addresses })
-    } catch (error) {
-        console.error(error)
-        return NextResponse.json({ error: error.code || error.message }, { status: 400 })
-    }
-
-
-}
