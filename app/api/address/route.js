@@ -15,8 +15,8 @@ export async function POST(request) {
         })
         return NextResponse.json({ newAddress, message: 'Address added successfully' })
     } catch (error) {
-        // console.error(error)
-        // return NextResponse.json({ error: error.code || error.message }, { status: 400 })
+        console.error(error)
+        return NextResponse.json({ error: error.code || error.message }, { status: 400 })
     }
 }
 
