@@ -31,8 +31,8 @@ export async function GET(request) {
 
             return NextResponse.json({ cart: user.cart })
     } catch (error) {
-        // console.error(error)
-        // return NextResponse.json({ error: error.message }, { status:400 })
+        console.error(error)
+        return NextResponse.json({ error: error.message }, { status:400 })
     }
 }
 
