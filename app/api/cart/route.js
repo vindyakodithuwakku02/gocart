@@ -21,19 +21,19 @@ export async function POST(request) {
     }
 
     // Get user cart
-export async function GET(request) {
-    try {
-        const { userId } = getAuth(request)
+// export async function GET(request) {
+//     try {
+//         const { userId } = getAuth(request)
 
-        const user = await prisma.user.findUnique({
-            where: { id: userId }
-        })
+//         const user = await prisma.user.findUnique({
+//             where: { id: userId }
+//         })
 
-            return NextResponse.json({ cart: user.cart })
-    } catch (error) {
-        console.error(error)
-        return NextResponse.json({ error: error.message }, { status:400 })
-    }
-}
+//             return NextResponse.json({ cart: user.cart })
+//     } catch (error) {
+//         console.error(error)
+//         return NextResponse.json({ error: error.message }, { status:400 })
+//     }
+// }
 
        
