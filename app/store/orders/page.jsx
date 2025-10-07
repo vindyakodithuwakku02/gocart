@@ -51,15 +51,15 @@ export default function StoreOrders() {
 
     }
 
-    const openModal = (order) => {
-        setSelectedOrder(order)
-        setIsModalOpen(true)
-    }
+    // const openModal = (order) => {
+    //     setSelectedOrder(order)
+    //     setIsModalOpen(true)
+    // }
 
-    const closeModal = () => {
-        setSelectedOrder(null)
-        setIsModalOpen(false)
-    }
+    // const closeModal = () => {
+    //     setSelectedOrder(null)
+    //     setIsModalOpen(false)
+    // }
 
     useEffect(() => {
         fetchOrders()
