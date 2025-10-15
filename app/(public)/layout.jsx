@@ -26,6 +26,7 @@ export default function PublicLayout({ children }) {
     useEffect(() => {
         if(user) {
             dispatch(fetchCart({getToken}))
+            dispatch(fetchAddress({getToken}))
         }
     } , [user])
 
