@@ -32,7 +32,18 @@ const AddressModal = ({ setShowAddressModal }) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        setShowAddressModal(false)
+        try {
+            const token = await getToken()
+            const {data} = await axios.post('/api/address', { address }, {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+            dispatch(addAddress(data.address))
+            toast.success(data.message)
+            setShowAddressModal(false)
+        } catch (error) {
+            console.log(error)
+            toast.error(error?.response?.data?.message || error.message || "Something went wrong"   )
+        }       
     }
 
     return (
