@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { fetchProducts } from "@/lib/features/product/productSlice";
 import {useUser} from "@clerk/nextjs";
 import { useAuth } from "@clerk/nextjs";
-import { fetchCart } from "@/lib/features/cart/cartSlice";
+import { fetchCart, uploadCart } from "@/lib/features/cart/cartSlice";
 
 export default function PublicLayout({ children }) {
 
@@ -28,6 +28,12 @@ export default function PublicLayout({ children }) {
             dispatch(fetchCart({getToken}))
         }
     } , [user])
+
+    useEffect(() => {
+        if(user) {
+            dispatch(uploadCart({getToken}))
+        }
+    } , [cartItems])
 
     return (
         <>
