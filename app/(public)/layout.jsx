@@ -8,6 +8,7 @@ import { fetchProducts } from "@/lib/features/product/productSlice";
 import {useUser} from "@clerk/nextjs";
 import { useAuth } from "@clerk/nextjs";
 import { fetchCart, uploadCart } from "@/lib/features/cart/cartSlice";
+import { fetchAddress } from "@/lib/features/address/addressSlice";
 
 export default function PublicLayout({ children }) {
 
