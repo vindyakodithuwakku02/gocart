@@ -2,7 +2,7 @@
 import Banner from "@/components/Banner";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { useDispatch } from "react-redux";
+import { useDispatch , useSelector} from "react-redux";
 import { useEffect } from "react";
 import { fetchProducts } from "@/lib/features/product/productSlice";
 import {useUser} from "@clerk/nextjs";
@@ -15,6 +15,8 @@ export default function PublicLayout({ children }) {
     
     const {user} = useUser()
     const {getToken} = useAuth()
+
+    const {cartItems} = useSelector((state) => state.cart)
 
 
     useEffect(() => {
