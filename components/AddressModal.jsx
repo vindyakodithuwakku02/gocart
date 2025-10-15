@@ -2,8 +2,14 @@
 import { XIcon } from "lucide-react"
 import { useState } from "react"
 import { toast } from "react-hot-toast"
+import { useDispatch } from "react-redux"
+import { useAuth } from "@clerk/nextjs"
+import { addAddress, fetchAddress } from "@/lib/features/address/addressSlice"  
 
 const AddressModal = ({ setShowAddressModal }) => {
+
+    const {getToken} = useAuth()   
+    const dispatch = useDispatch() 
 
     const [address, setAddress] = useState({
         name: '',
