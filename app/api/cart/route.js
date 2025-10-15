@@ -1,11 +1,11 @@
-import { getAuth } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
 //Update user cart
 export async function POST(request) {
     try {
-        const { userId } = getAuth(request) 
+        const { userId } = await auth() 
         const { cart } = await request.json()   
 
 //save the cart to the user object
