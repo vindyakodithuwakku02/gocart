@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useUser, useClerk, UserButton } from "@clerk/nextjs";
+import { useUser, useClerk, UserButton,Protect } from "@clerk/nextjs";
 
 const Navbar = () => {
   const { user } = useUser();
