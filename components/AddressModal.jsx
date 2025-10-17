@@ -3,7 +3,9 @@ import { XIcon } from "lucide-react"
 import { useState } from "react"
 import { toast } from "react-hot-toast"
 import { useDispatch } from "react-redux"
-
+import { useAuth } from "@clerk/nextjs"
+import { addAddress } from "@/lib/features/address/addressSlice"  
+import axios from "axios"
 
 const AddressModal = ({ setShowAddressModal }) => {
 
