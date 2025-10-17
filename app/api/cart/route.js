@@ -25,25 +25,25 @@ export async function POST(request) {
     }
 }
 
-// Get user cart
-export async function GET(request) {
-    try {
-        const { userId } = await auth()
+// // Get user cart
+// export async function GET(request) {
+//     try {
+//         const { userId } = await auth()
         
-        if (!userId) {
-            return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-        }
+//         if (!userId) {
+//             return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+//         }
 
-        const user = await prisma.user.findUnique({
-            where: { id: userId }
-        })
+//         const user = await prisma.user.findUnique({
+//             where: { id: userId }
+//         })
 
-        // Return empty cart if user.cart is null or undefined
-        return NextResponse.json({ cart: user?.cart || {} })
-    } catch (error) {
-        console.error(error)
-        return NextResponse.json({ error: error.message }, { status: 400 })
-    }
-}
+//         // Return empty cart if user.cart is null or undefined
+//         return NextResponse.json({ cart: user?.cart || {} })
+//     } catch (error) {
+//         console.error(error)
+//         return NextResponse.json({ error: error.message }, { status: 400 })
+//     }
+// }
 
        
