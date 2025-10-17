@@ -1,7 +1,3 @@
-'use client'
-import { PricingTable } from "@clerk/nextjs"
-import { useUser } from "@clerk/nextjs"
-import { Loader2 } from "lucide-react"
 
 export default function PricingPage() {
     const { isLoaded, isSignedIn } = useUser()
