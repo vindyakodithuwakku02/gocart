@@ -70,15 +70,15 @@ const Navbar = () => {
                 Login
               </button>
             ) : (
-              <UserButton>
-                <UserButton.MenuItems>
-                  <UserButton.Action
-                    labelIcon={<PackageIcon size={16} />}
-                    label="My Orders"
-                    onClick={() => router.push('/orders')}
-                  />
-                </UserButton.MenuItems>
-              </UserButton>
+              // <UserButton>
+              //   <UserButton.MenuItems>
+              //     <UserButton.Action
+              //       labelIcon={<PackageIcon size={16} />}
+              //       label="My Orders"
+              //       onClick={() => router.push('/orders')}
+              //     />
+              //   </UserButton.MenuItems>
+              // </UserButton>
             )}
           </div>
         </div>
