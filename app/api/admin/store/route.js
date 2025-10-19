@@ -1,13 +1,11 @@
 import authAdmin from "@/middlewares/authAdmin";
-import { getAuth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
 // Get all approved stores
-export async function GET(request) {
+export async function GET() {
   try {
-    const { userId } = getAuth(request);
-    const isAdmin = await authAdmin(request); 
+    const isAdmin = await authAdmin(); 
 
     if (!isAdmin) {
       return NextResponse.json({ error: "Not authorized" }, { status: 401 });

@@ -1,8 +1,8 @@
-import { getAuth } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server";
 
-const authAdmin = async (request) => {
+const authAdmin = async () => {
   try {
-    const { userId, sessionClaims } = getAuth(request);
+    const { userId, sessionClaims } = await auth();
 
     if (!userId || !sessionClaims?.email) {
       console.log("❌ No user or email found");
