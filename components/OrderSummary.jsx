@@ -41,28 +41,6 @@ const OrderSummary = ({ totalPrice, items }) => {
     } catch (error) {
       toast.error(error.response?.data?.error || 'Failed to apply coupon');
     }
-  }
-      }
-      const response = await fetch('/api/coupon/verify', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ code: couponCodeInput }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setCoupon(data.coupon);
-        toast.success('Coupon applied successfully');
-      } else {
-        toast.error(data.error || 'Failed to apply coupon');
-      }
-    } catch (error) {
-      toast.error('An error occurred while applying the coupon');
-    }
   };
 
   const handlePlaceOrder = async (e) => {
