@@ -1,4 +1,6 @@
 import { useAuth } from "@clerk/nextjs";
+import { NextResponse } from "next/server";
+import prisma from "@/lib/prisma";  
 
 
 //Verify coupon 
