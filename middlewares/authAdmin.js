@@ -1,16 +1,23 @@
-import { auth } from "@clerk/nextjs/server";
+import { currentUser } from "@clerk/nextjs/server";
 
+// Returns true if the currently authenticated user is in the ADMIN_EMAIL list
 const authAdmin = async () => {
   try {
-    const { userId, sessionClaims } = await auth();
+    // currentUser() reliably returns the Clerk user object (including emails)
+    const user = await currentUser();
 
-    if (!userId || !sessionClaims?.email) {
-      console.log("❌ No user or email found");
+    if (!user) {
+      console.log("❌ No user found");
       return false;
     }
 
-    const email = sessionClaims.email.toLowerCase();
-    const adminList = process.env.ADMIN_EMAIL?.split(",").map(e => e.trim().toLowerCase()) || [];
+    const email = user.emailAddresses?.[0]?.emailAddress?.toLowerCase();
+    if (!email) {
+      console.log("❌ No email found on user:", user);
+      return false;
+    }
+
+    const adminList = process.env.ADMIN_EMAIL?.split(",").map((e) => e.trim().toLowerCase()) || [];
 
     console.log("🔍 Logged-in email:", email);
     console.log("🔐 Admin list:", adminList);
