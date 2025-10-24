@@ -24,8 +24,31 @@ const OrderSummary = ({ totalPrice, items }) => {
 
   const handleCouponCode = async (event) => {
     event.preventDefault();
-    // Stub - no actual coupon logic yet
-    toast.error('Coupon system not implemented yet');
+    try {
+      if(!user){
+        return toast.error('You must be logged in to apply a coupon');
+      }
+      const token = await getToken();
+      const response = await fetch('/api/coupon/verify', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ code: couponCodeInput }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setCoupon(data.coupon);
+        toast.success('Coupon applied successfully');
+      } else {
+        toast.error(data.error || 'Failed to apply coupon');
+      }
+    } catch (error) {
+      toast.error('An error occurred while applying the coupon');
+    }
   };
 
   const handlePlaceOrder = async (e) => {
