@@ -5,11 +5,12 @@ import AddressModal from './AddressModal';
 import { useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import {Protect, useUser} from '@clerk/nextjs';
+import {Protect, useAuth, useUser} from '@clerk/nextjs';
 
 const OrderSummary = ({ totalPrice, items }) => {
   const {user} = useUser();
-  
+  const { getToken } = useAuth();
+
   const currency = process.env.NEXT_PUBLIC_CURRENCY_SYMBOL || '$';
   const router = useRouter();
 
